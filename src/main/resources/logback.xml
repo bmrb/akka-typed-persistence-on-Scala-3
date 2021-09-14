@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="false">
+
+    <if condition='isDefined("AKKA_STREAM_LOG_LEVEL")'>
+        <then>
+            <if condition='property("AKKA_STREAM_LOG_LEVEL").equalsIgnoreCase("warning")'>-->
+                <then>
+                    <property name="AKKA_STREAM_LOG_LEVEL" value="WARN" />
+                </then>
+            </if>
+        </then>
+        <else>
+            <property name="AKKA_STREAM_LOG_LEVEL" value="INFO" />
+        </else>
+    </if>
+
+    <if condition='isDefined("LOG_LEVEL")'>
+        <then>
+            <if condition='property("LOG_LEVEL").equalsIgnoreCase("warning")'>-->
+                <then>
+                    <property name="LOG_LEVEL" value="WARN" />
+                </then>
+            </if>
+        </then>
+        <else>
+            <property name="LOG_LEVEL" value="INFO" />
+        </else>
+    </if>
+
+    <if condition='isDefined("AKKA_LOG_LEVEL")'>
+        <then>
+            <if condition='property("AKKA_LOG_LEVEL").equalsIgnoreCase("warning")'>-->
+                <then>
+                    <property name="AKKA_LOG_LEVEL" value="WARN" />
+                </then>
+            </if>
+        </then>
+        <else>
+            <property name="AKKA_LOG_LEVEL" value="INFO" />
+        </else>
+    </if>
+
+
+
+    <appender name="STDOUT" target="System.out" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>[%date{ISO8601}] [%level] - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="ASYNC" class="ch.qos.logback.classic.AsyncAppender">
+        <queueSize>8192</queueSize>
+        <neverBlock>true</neverBlock>
+        <appender-ref ref="STDOUT" />
+    </appender>
+
+    <logger name="akka" level="${AKKA_LOG_LEVEL}"/>
+    <logger name="akka.stream" level="${AKKA_STREAM_LOG_LEVEL}" />
+    <logger name="com.test" level="${LOG_LEVEL}" />
+
+    <root level="INFO">
+        <appender-ref ref="ASYNC"/>
+    </root>
+
+</configuration>
