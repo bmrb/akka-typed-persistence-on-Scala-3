@@ -8,6 +8,7 @@ object Dependencies {
     val LogBack = "1.2.5"
     val Janino = "3.1.6"
     val LevelDBJni = "1.8"
+    val Jackson = "2.13.0-rc1"
   }
 
   lazy val akka = Seq(
@@ -21,6 +22,10 @@ object Dependencies {
     "ch.qos.logback" % "logback-classic" % Version.LogBack,
     "org.codehaus.janino" % "janino" % Version.Janino,
     "org.fusesource.leveldbjni" % "leveldbjni-all" % Version.LevelDBJni,
+
+    "com.fasterxml.jackson.core" % "jackson-databind" % Version.Jackson,
+    ("com.fasterxml.jackson.module" %% "jackson-module-scala" % Version.Jackson).cross(CrossVersion.for3Use2_13),
+
   )
 
 }
